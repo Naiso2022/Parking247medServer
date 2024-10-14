@@ -222,6 +222,16 @@ class ParkingRepository {
     }
   }
 
+  void endParking(int id) {
+    int index = _parkings.indexWhere((parking) => parking.id == id);
+    if (index != -1) {
+      _parkings[index].sluttid = DateTime.now(); // Sätt sluttid direkt
+      print('Parkering med ID $id har avslutats.'); // Meddelande för avslutande
+    } else {
+      print('Ingen parkering hittades med ID $id.');
+    }
+  }
+
   void delete(int id) {
     // Hitta indexet för parkeringen med det angivna ID:t
     int index = _parkings.indexWhere((parking) => parking.id == id);
@@ -795,13 +805,12 @@ void handleParkings(ParkingRepository parkingRepo,
 
       if (parkingToEnd.sluttid != null) {
         print('Denna parkering är redan avslutad.');
-        break; 
+        break;
       }
 
-      parkingToEnd.sluttid = DateTime.now();
-      parkingRepo.update(endParkingId, parkingToEnd);
-      print('Parkering med ID $endParkingId har avslutats.');
+      parkingRepo.endParking(endParkingId);
       break;
+
 
     case '4':
       // Ta bort parkering
