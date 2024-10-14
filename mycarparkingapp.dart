@@ -795,7 +795,7 @@ void handleParkings(ParkingRepository parkingRepo,
 
       if (parkingToEnd.sluttid != null) {
         print('Denna parkering är redan avslutad.');
-        break;
+        break; 
       }
 
       parkingToEnd.sluttid = DateTime.now();
