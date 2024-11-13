@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      objectbox_generator:objectbox_generator:
+        generate_for:
+          - lib/*.dart
+      json_serializable:json_serializable:
+        generate_for:
+          - lib/*.json.dart
