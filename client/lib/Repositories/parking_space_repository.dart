@@ -1,8 +1,9 @@
-import 'package:objectbox/objectbox.dart';
-import '../Models/parking_space.dart';
-import 'package:mycarparkingapp/objectbox.g.dart'; 
+import 'package:shared/shared.dart'; 
 
 class ParkingSpaceRepository {
+
+  // TODO: remove store when no longer used
+
   late final Box<ParkingSpace> _parkingSpaceBox;
 
   ParkingSpaceRepository(Store store) {

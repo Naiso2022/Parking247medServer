@@ -1,7 +1,8 @@
 // objectbox_handler.dart
-import 'objectbox.g.dart'; 
 
 // Globala variabler
+import 'package:shared/shared.dart';
+
 late final Store store;
 
 // Funktion för att öppna och initiera ObjectBox

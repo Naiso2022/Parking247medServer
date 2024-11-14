@@ -1,13 +1,12 @@
 import 'dart:io';
-import 'package:mycarparkingapp/Models/person.dart';
-import 'package:mycarparkingapp/Models/vehicle.dart';
-import 'package:mycarparkingapp/Models/parking_space.dart';
-import 'package:mycarparkingapp/Models/parking.dart';
+
 import 'package:mycarparkingapp/Repositories/person_repository.dart';
 import 'package:mycarparkingapp/Repositories/vehicle_repository.dart';
 import 'package:mycarparkingapp/Repositories/parking_space_repository.dart';
 import 'package:mycarparkingapp/Repositories/parking_repository.dart';
 import 'dart:async';
+
+import 'package:shared/shared.dart';
 
 Future<void> startCliFlow(
   PersonRepository personRepo,
@@ -709,6 +708,9 @@ Future<void> handleParkings(
       );
 
       await parkingRepo.create(parking);
+
+      // ask server to create the parking
+
       print(
           'Parkering startad för fordon ${vehicle.registrationNumber} på plats ${space.address}.');
       break;

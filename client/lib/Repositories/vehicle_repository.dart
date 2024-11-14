@@ -1,9 +1,10 @@
-import '../Models/vehicle.dart';
-import '../Models/person.dart';
-import 'package:mycarparkingapp/objectbox.g.dart';
-import '../Models/parking.dart';
+
+import 'package:shared/shared.dart';
+
 
 class VehicleRepository {
+
+  // TODO: remove store when no longer used
  
   late final Box<Vehicle> _vehicleBox;
   late final Box<Person> _personBox;

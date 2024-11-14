@@ -1,5 +1,6 @@
-import '../Models/person.dart';
-import 'package:mycarparkingapp/objectbox.g.dart';
+
+
+import 'package:shared/shared.dart';
 
 class PersonRepository {
   final Box<Person> _personBox;

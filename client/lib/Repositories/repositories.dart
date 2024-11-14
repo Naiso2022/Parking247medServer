@@ -2,7 +2,7 @@ import 'package:mycarparkingapp/Repositories/person_repository.dart';
 import 'package:mycarparkingapp/Repositories/vehicle_repository.dart';
 import 'package:mycarparkingapp/Repositories/parking_space_repository.dart';
 import 'package:mycarparkingapp/Repositories/parking_repository.dart';
-import 'package:mycarparkingapp/objectbox.g.dart';
+import 'package:shared/shared.dart';
 
 class Repositories {
   final PersonRepository personRepo;

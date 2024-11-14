@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:isolate'; 
+import 'dart:isolate';
+import 'package:shared/shared.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf_io.dart' as io;
@@ -8,19 +9,16 @@ import 'package:mycarparkingapp/Repositories/person_repository.dart';
 import 'package:mycarparkingapp/Repositories/vehicle_repository.dart';
 import 'package:mycarparkingapp/Repositories/parking_space_repository.dart';
 import 'package:mycarparkingapp/Repositories/parking_repository.dart';
-import 'package:mycarparkingapp/objectbox.g.dart';
-import 'mycarparkingapp.dart';
+
 import 'dart:async';
 
 late Store store;
 HttpServer? server;
 
-
 late PersonRepository personRepo;
 late VehicleRepository vehicleRepo;
 late ParkingSpaceRepository parkingSpaceRepo;
 late ParkingRepository parkingRepo;
-
 
 class ServerIsolateParams {
   final SendPort sendPort;
@@ -47,8 +45,8 @@ Future<void> main() async {
   parkingRepo = ParkingRepository(store, parkingSpaceRepo);
 
   final persons = await personRepo.getAll();
-  final vehicles = await vehicleRepo.getAll(); 
-  final parkings = await parkingRepo.getAll(); 
+  final vehicles = await vehicleRepo.getAll();
+  final parkings = await parkingRepo.getAll();
   final parkingSpaces = await parkingSpaceRepo.getAll();
   final jsonPersons = persons.map((p) => p.toJson()).toList();
   final jsonVehicles = vehicles.map((v) => v.toJson()).toList();
@@ -57,9 +55,6 @@ Future<void> main() async {
 
   startServerInIsolate(
       jsonPersons, jsonVehicles, jsonParkings, jsonParkingSpaces);
-
-  // Starta CLI-flödet
-  startCliFlow(personRepo, vehicleRepo, parkingSpaceRepo, parkingRepo);
 }
 
 Future<void> initStore() async {
@@ -104,6 +99,8 @@ Future<void> startServer(ServerIsolateParams params) async {
 
   // Skapa rutter för personer
   appRouter.get('/persons', (Request req) async {
+    //TODO: get all persons from person repository
+
     return Response.ok(
       jsonEncode(persons),
       headers: {'Content-Type': 'application/json'},
@@ -112,6 +109,8 @@ Future<void> startServer(ServerIsolateParams params) async {
 
   // Skapa rutter för fordon
   appRouter.get('/vehicles', (Request req) async {
+    //TODO: get all vehicles from person repository
+
     return Response.ok(
       jsonEncode(vehicles),
       headers: {'Content-Type': 'application/json'},
@@ -120,6 +119,10 @@ Future<void> startServer(ServerIsolateParams params) async {
 
   // Skapa rutter för parkeringar
   appRouter.get('/parkings', (Request req) async {
+
+    //TODO: get all parkings from person repository
+
+
     return Response.ok(
       jsonEncode(parkings),
       headers: {'Content-Type': 'application/json'},
@@ -128,11 +131,44 @@ Future<void> startServer(ServerIsolateParams params) async {
 
   // Skapa rutter för parkeringsplatser
   appRouter.get('/parkingSpaces', (Request req) async {
+
+    //TODO : ...
+
     return Response.ok(
       jsonEncode(parkingSpaces),
       headers: {'Content-Type': 'application/json'},
     );
   });
+
+  // TODO: add routes (from specification)
+
+  // TODO: check https://github.com/williamviktorsson/HFL24/tree/main/assignment_code/assignment_2_almost_finished_example/objectbox
+
+  /* 
+  
+  Route	HTTP-metod	Beskrivning	Repository-metod
+/persons	GET	Hämta alla personer	getAll()
+/persons	POST	Skapa ny person	create()
+/persons/<id>	GET	Hämta specifik person	getById()
+/persons/<id>	PUT	Uppdatera specifik person	update()
+/persons/<id>	DELETE	Ta bort specifik person	delete()
+/vehicles	GET	Hämta alla fordon	getAll()
+/vehicles	POST	Skapa nytt fordon	create()
+/vehicles/<id>	GET	Hämta specifikt fordon	getById()
+/vehicles/<id>	PUT	Uppdatera specifikt fordon	update()
+/vehicles/<id>	DELETE	Ta bort specifikt fordon	delete()
+/parkingspaces	GET	Hämta alla parkeringsplatser	getAll()
+/parkingspaces	POST	Skapa ny parkeringsplats	create()
+/parkingspaces/<id>	GET	Hämta specifik parkeringsplats	getById()
+/parkingspaces/<id>	PUT	Uppdatera parkeringsplats	update()
+/parkingspaces/<id>	DELETE	Ta bort parkeringsplats	delete()
+/parkings	GET	Hämta alla parkeringar	getAll()
+/parkings	POST	Skapa ny parkering	create()
+/parkings/<id>	GET	Hämta specifik parkering	getById()
+/parkings/<id>	PUT	Uppdatera specifik parkering	update()
+/parkings/<id>	DELETE	Ta bort specifik parkering	delete()
+  
+   */
 
   final handler =
       const Pipeline().addMiddleware(logRequests()).addHandler(appRouter.call);

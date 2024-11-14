@@ -1,7 +1,7 @@
-import '../Models/parking.dart';
-import '../Models/vehicle.dart'; 
+
 import 'package:mycarparkingapp/Repositories/parking_space_repository.dart';
-import 'package:mycarparkingapp/objectbox.g.dart'; 
+import 'package:shared/shared.dart';
+
 
 /// Repository för hantering av parkeringsobjekt
 class ParkingRepository {
